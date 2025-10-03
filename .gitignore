@@ -1,3 +1,3 @@
 ./venv/
-./pyAI/db.sqlite3
+djangoC/pyAI/db.sqlite3
 ./pyAI/papers/*
