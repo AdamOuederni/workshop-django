@@ -11,7 +11,7 @@ class AdminUserModel(admin.ModelAdmin):
     #fieldsets=("informations générales",{"fields":("first_name","last_name","role","affiliation","nationality")}),("Contact Info",{"fields":("email",)})
     fieldsets = (
         ("Informations générales", {
-            "fields": ("first_name", "last_name", "role", "affiliation", "nationality")
+            "fields": ("user_id","first_name", "last_name", "role", "affiliation", "nationality")
         }),
         ("Contact Info", {
             "fields": ("email",)

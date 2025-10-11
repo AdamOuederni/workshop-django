@@ -85,10 +85,10 @@ class OrganizingCommittee(models.Model):
         ('co-chair','co-chair'),
         ('member','member')
     ]
-    commitee_role = models.CharField(max_length=255,choices=chair)
-    join_date = models.DateField()
+    committee_role = models.CharField(max_length=255,choices=chair)
+    date_joined = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    update_at = models.DateTimeField(auto_now=True)
     # user = models.ForeignKey("UserApp.User",on_delete=models.CASCADE,related_name='committees')
     user = models.ForeignKey("UserApp.USER", on_delete=models.CASCADE, related_name='committees')
     conference = models.ForeignKey('ConferenceApp.CONFERENCE',on_delete=models.CASCADE,related_name='committees')
