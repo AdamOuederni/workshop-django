@@ -13,7 +13,7 @@ admin.site.index_title="django app conférence"
 
 @admin.register(Submission)
 class SubmissionAdmin(admin.ModelAdmin):
-    # Colonnes visibles dans la liste
+    
     list_display = (
         "submission_id",
         "title",
@@ -24,16 +24,16 @@ class SubmissionAdmin(admin.ModelAdmin):
         "submission_date",
     )
     
-    # Champs cliquables
+    
     list_display_links = ("submission_id", "title")
 
-    # Filtres à droite
+    
     list_filter = ("status",)
 
-    # Champs de recherche
+    
     search_fields = ("submission_id", "title", "user__first_name", "user__last_name", "conference__name")
 
-    # Tri par défaut
+    
     ordering = ("-submission_date",)
 
     list_select_related = ("user", "conference")
