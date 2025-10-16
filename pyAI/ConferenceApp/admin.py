@@ -1,13 +1,86 @@
 from django.contrib import admin
 from .models import Conference,Submission,OrganizingCommittee
-
+from django.utils.html import format_html
 # Register your models here.
 # admin.site.register(Conference)
-admin.site.register(Submission)
+#admin.site.register(Submission)
 # admin.site.register(OrganizingCommittee)
 admin.site.site_title="Gestion Conférence 25/26"
 admin.site.site_header="Gestion Conférences"
 admin.site.index_title="django app conférence"
+
+
+
+@admin.register(Submission)
+class SubmissionAdmin(admin.ModelAdmin):
+    # Colonnes visibles dans la liste
+    list_display = (
+        "submission_id",
+        "title",
+        "user_name",
+        "conference_name",
+        "status",
+        "colored_status",
+        "submission_date",
+    )
+    
+    # Champs cliquables
+    list_display_links = ("submission_id", "title")
+
+    # Filtres à droite
+    list_filter = ("status",)
+
+    # Champs de recherche
+    search_fields = ("submission_id", "title", "user__first_name", "user__last_name", "conference__name")
+
+    # Tri par défaut
+    ordering = ("-submission_date",)
+
+    list_select_related = ("user", "conference")
+
+    list_per_page = 25
+    fieldsets = (
+        ("Informations principales", {
+            "fields": ("submission_id", "title", "abstract", "keyword", "paper", "status", "payed")
+        }),
+        ("Liens", {
+            "fields": ("user", "conference")
+        }),
+        ("Dates", {
+            "fields": ("submission_date", "created_at", "update_at")
+        }),
+    )
+
+    readonly_fields = ("submission_id", "submission_date", "created_at", "update_at")
+    date_hierarchy = "submission_date"
+
+    
+    list_editable = ("status",)
+
+
+    def user_name(self, obj):
+        return f"{obj.user.first_name} {obj.user.last_name}"
+    user_name.short_description = "Auteur"
+
+    def conference_name(self, obj):
+        return obj.conference.name
+    conference_name.short_description = "Conférence"
+
+    def colored_status(self, obj):
+        """Affiche le statut coloré."""
+        color_map = {
+            "submitted": "gray",
+            "under review": "orange",
+            "accepted": "green",
+            "rejected": "red",
+        }
+        color = color_map.get(obj.status, "black")
+        return format_html('<b><span style="color: {};">{}</span></b>', color, obj.status.capitalize())
+    colored_status.short_description = "Statut"
+
+
+
+
 class SubmissionInline(admin.TabularInline):
     model = Submission
     extra=1

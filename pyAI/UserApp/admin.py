@@ -22,7 +22,10 @@ class AdminUserModel(admin.ModelAdmin):
             return f"{obj.first_name} {obj.last_name}"
         return "RAS"
     full_name.short_description = "Nom complet"
+    list_per_page = 25
     date_hierarchy = "created_at"
+    ordering = ("-created_at",)
     readonly_fields=("user_id",)
     list_display_links = ("email","full_name")
+    list_editable = ("role", "nationality")
 
