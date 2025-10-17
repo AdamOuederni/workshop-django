@@ -57,7 +57,7 @@ ROOT_URLCONF = 'pyAI.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / "pyAI\Templates" ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -11,7 +11,12 @@ admin.site.index_title="django app conférence"
 
 
 
+def  mark_as_payed(modeladmin,req,queryset):
+    queryset.update(payed=True)
+def  mark_as_accepted(modeladmin,req,queryset):
+    queryset.update(status="accepted")
 @admin.register(Submission)
+
 class SubmissionAdmin(admin.ModelAdmin):
     
     list_display = (
@@ -19,6 +24,7 @@ class SubmissionAdmin(admin.ModelAdmin):
         "title",
         "user_name",
         "conference_name",
+        "payed",
         "status",
         "colored_status",
         "submission_date",
@@ -77,6 +83,7 @@ class SubmissionAdmin(admin.ModelAdmin):
         color = color_map.get(obj.status, "black")
         return format_html('<b><span style="color: {};">{}</span></b>', color, obj.status.capitalize())
     colored_status.short_description = "Statut"
+    actions =[mark_as_payed,mark_as_accepted]
 
 
 
