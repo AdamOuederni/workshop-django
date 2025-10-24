@@ -5,5 +5,7 @@ urlpatterns = [
     #path("liste/",views.list_conferences,name="liste_conferences")
     path("liste/", ConferenceList.as_view(), name="liste_conferences"),
     path("<int:pk>/", ConferenceDetails.as_view(), name="conference_details"),
-    path("add/", ConferenceCreate.as_view(),name="Conference creation")
+    path("add/", ConferenceCreate.as_view(),name="Conference_creation"),
+    path("edit/<int:pk>/", ConferenceUpdate.as_view(),name="Conference_update"),
+    path("delete/<int:pk>/", ConferenceDelete.as_view(),name="Conference_delete")
 ]
