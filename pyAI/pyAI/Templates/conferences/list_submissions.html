@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>my submissions</h2>
+
+{% if submissions %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Statut</th>
+            <th>Auteur</th>
+            <th>Conférence</th>
+            <th>Date de soumission</th>
+            <th>Paiement</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in submissions %}
+        <tr>
+            <td>{{ s.submission_id }}</td>
+            <td>{{ s.title }}</td>
+            <td>{{ s.status }}</td>
+            <td>{{ s.user.username }}</td>
+            <td>{{ s.conference.name }}</td>
+            <td>{{ s.submission_date|date:"d/m/Y" }}</td>
+            <td>{% if s.payed %}Payé{% else %}Non payé{% endif %}</td>
+            <td>
+                <a href="{% url 'submission_details' s.submission_id %}">Détails</a>
+                
+                {# Correction : utiliser 's' au lieu de 'submission' et condition corrigée #}
+                {% if s.status != 'accepted' and s.status != 'rejected' %}
+                    <a href="{% url 'update_submission' s.submission_id %}">Modifier</a>
+                {% else %}
+                    <span>Non modifiable</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>pas de soumissions</p>
+{% endif %}
+<a href="{% url 'Submission_creation' %}">ajouter une soumission</a>
+
+{% endblock %}

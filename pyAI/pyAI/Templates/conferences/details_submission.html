@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Détails de la soumission</h2>
+
+<div>
+  <p>ID:{{ submission.submission_id }}</p>
+  <p>Titre:{{ submission.title }}</p>
+  <p>Résumé:{{ submission.abstract }}</p>
+  <p>Mots-clés : {{ submission.keyword }}</p>
+  <p>Statut : {{ submission.status }}</p>
+  <p>Conférence : {{ submission.conference.name }}</p>
+  <p>Auteur : {{ submission.user.username }}</p>
+
+  <p>
+    Fichier PDF :
+    {% if submission.paper %}
+      <a href="{% url 'download_paper' submission.pk %}">Télécharger</a>
+    {% else %}
+      Aucun fichier joint.
+    {% endif %}
+  </p>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Modifier la soumission</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label">ID de soumission</label>
+                    <input type="text" class="form-control" value="{{ object.submission_id }}" readonly>
+                    <small class="form-text text-muted">Non modifiable</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Date de soumission</label>
+                    <input type="text" class="form-control" value="{{ object.submission_date }}" readonly>
+                    <small class="form-text text-muted">Non modifiable</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Utilisateur</label>
+                    <input type="text" class="form-control" value="{{ object.user.username }}" readonly>
+                    <small class="form-text text-muted">Non modifiable</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Conférence</label>
+                    <input type="text" class="form-control" value="{{ object.conference.name }}" readonly>
+                    <small class="form-text text-muted">Non modifiable</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Statut</label>
+                    <input type="text" class="form-control" value="{{ object.get_status_display }}" readonly>
+                    <small class="form-text text-muted">Non modifiable</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label }}</label>
+                    <input type="text" 
+                           name="{{ form.title.name }}" 
+                           value="{{ form.title.value|default:'' }}" 
+                           class="form-control" 
+                           id="{{ form.title.id_for_label }}">
+                    {% if form.title.help_text %}
+                        <small class="form-text text-muted">{{ form.title.help_text }}</small>
+                    {% endif %}
+                    {% if form.title.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.title.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.abstract.id_for_label }}" class="form-label">{{ form.abstract.label }}</label>
+                    <textarea name="{{ form.abstract.name }}" 
+                              class="form-control" 
+                              id="{{ form.abstract.id_for_label }}" 
+                              rows="4">{{ form.abstract.value|default:'' }}</textarea>
+                    {% if form.abstract.help_text %}
+                        <small class="form-text text-muted">{{ form.abstract.help_text }}</small>
+                    {% endif %}
+                    {% if form.abstract.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.abstract.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.keyword.id_for_label }}" class="form-label">{{ form.keyword.label }}</label>
+                    <input type="text" 
+                           name="{{ form.keyword.name }}" 
+                           value="{{ form.keyword.value|default:'' }}" 
+                           class="form-control" 
+                           id="{{ form.keyword.id_for_label }}"
+                           placeholder="Mots-clés séparés par des virgules">
+                    {% if form.keyword.help_text %}
+                        <small class="form-text text-muted">{{ form.keyword.help_text }}</small>
+                    {% endif %}
+                    {% if form.keyword.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.keyword.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.paper.id_for_label }}" class="form-label">{{ form.paper.label }}</label>
+                    <input type="file" 
+                           name="{{ form.paper.name }}" 
+                           class="form-control" 
+                           id="{{ form.paper.id_for_label }}"
+                           accept=".pdf">
+                    {% if object.paper %}
+                        <small class="form-text text-muted">
+                            Fichier actuel : <a href="{{ object.paper.url }}" target="_blank">{{ object.paper.name }}</a>
+                        </small>
+                    {% endif %}
+                    {% if form.paper.help_text %}
+                        <small class="form-text text-muted">{{ form.paper.help_text }}</small>
+                    {% endif %}
+                    {% if form.paper.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.paper.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                    <a href="{% url 'list_submissions' %}" class="btn btn-secondary">Annuler</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
