@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<table border="1">
+
+    <tr><td>Title</td><td>topic</td> <td>session_day</td><td>Actions</td></tr>
+  
+    {% for c in liste %}
+    <tr>
+        <td>{{ c.title }}</td>
+        <td>{{c.topic}}</td>
+        <td>{{c.session_day}} - {{c.start_time}}</td>
+        <td><a href="{% url 'session_details' c.pk %}">Détails</a>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
